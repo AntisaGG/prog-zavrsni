@@ -3,16 +3,16 @@
 #include <stdlib.h>
 #include "header.h"
 
-char* datoteka = "C:\\Users\\student\\source\\repos\\PROG_zavrsni\\clanovi.bin";
+char* imeDatoteke = "C:\\Users\\student\\source\\repos\\PROG_zavrsni\\clanovi.bin";
 
 int main() {
 
-	int temp = 1;
+	int temp = 1; //1
 
-	kreiranjeDatoteke(datoteka);
+	kreiranjeDatoteke(imeDatoteke);
 
 	while (temp) {
-		temp = izbornik(datoteka);
+		temp = izbornik(imeDatoteke);
 	}
 
 	printf("Kraj programa!\n");
