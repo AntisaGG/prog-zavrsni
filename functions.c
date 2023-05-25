@@ -75,7 +75,7 @@ void dodavanjeClanova(char* imeDatoteke) {
 	scanf("%49[^\n]", temp.adresa);
 	fseek(pF, sizeof(CLAN) * brojClanova, SEEK_CUR); //17
 	fwrite(&temp, sizeof(CLAN), 1, pF); 
-	rewind(pF); 
+	rewind(pF); //17
 	brojClanova++; 
 	fwrite(&brojClanova, sizeof(int), 1, pF);
 	fclose(pF);
