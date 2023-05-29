@@ -3,18 +3,10 @@
 #include <stdlib.h>
 #include "header.h"
 
-char* imeDatoteke = "C:\\Users\\student\\source\\repos\\PROG_zavrsni\\clanovi.bin";
-
 int main() {
 
-	int temp = 1; //1
-
-	kreiranjeDatoteke(imeDatoteke);
-
-	while (temp) {
-		temp = izbornik(imeDatoteke);
-	}
-
+	izbornik("clanovi.bin");
 	printf("Kraj programa!\n");
 	return 0;
 }
+
