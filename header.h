@@ -14,6 +14,5 @@ int izbornik(char* datoteka);
 void dodavanjeClanova(char* datoteka);
 void* ucitajClanove(const char* datoteka);
 void ispisivanjeClanova(CLAN* poljeClanova);
-void* pretrazivanjeClanova(CLAN* poljeClanova);
-void sortiranjeClanova(CLAN* poljeClanova);
-int izlazIzPrograma(CLAN* poljeClanova);
+void brisanjeClana(char* datoteka);
+void pretragaPoIDu(char* datoteka);
