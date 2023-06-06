@@ -16,3 +16,4 @@ void* ucitajClanove(const char* datoteka);
 void ispisivanjeClanova(CLAN* poljeClanova);
 void brisanjeClana(char* datoteka);
 void pretragaPoIDu(char* datoteka);
+void sortiranjePoProsjeku(char* datoteka);

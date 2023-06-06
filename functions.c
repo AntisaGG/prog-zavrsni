@@ -24,6 +24,7 @@ int izbornik(char* datoteka) { // 8
 		printf("\t\t\tOpcija 2: Brisanje clana!\n");
 		printf("\t\t\tOpcija 3: Ispis o svim clanovima!\n");
 		printf("\t\t\tOpcija 4: Pretraga po ID-u!\n");
+		printf("\t\t\tOpcija 5: Sortirane po prosjeku!\n");
 		printf("\t\t\tOpcija 9: Zavrsetak programa!\n");
 		printf("============================================================================\n");
 
@@ -47,6 +48,7 @@ int izbornik(char* datoteka) { // 8
 			printf("+==============+=====================+=====================+===============================+=========+\n\n\n");
 			break;
 		case 5:
+			sortiranjePoProsjeku(datoteka);
 			break;
 		case 6:
 			break;
@@ -84,8 +86,7 @@ void dodavanjeClanova(char* imeDatoteke) {
 		perror("Dodavanje clanova");
 		exit(EXIT_FAILURE);
 	}
-	int max_clanovi[999];
-	int tester,k=0,flag;
+	int tester,k=0;
 	srand((unsigned)time(NULL));
 	fread(&brojClanova, sizeof(int), 1, pF);
 	CLAN temp = { 0 };
@@ -257,3 +258,78 @@ void pretragaPoIDu(char* datoteka) {
 	free(poljeClanova);
 	fclose(pF);
 }
+
+void sortiranjePoProsjeku(char* datoteka) {
+	int odabir;
+	printf("Odaberite redoslijed sortiranja:\n");
+	printf("1. Uzlazno\n");
+	printf("2. Silazno\n");
+	printf("Unesite svoj odabir: ");
+	scanf("%d", &odabir);
+
+	if (odabir != 1 && odabir != 2) {
+		printf("Pogresan odabir. Moguce je odabrati samo 1 (uzlazno) ili 2 (silazno).\n");
+		return;
+	}
+
+	FILE* pF = fopen(datoteka, "rb+");
+	if (pF == NULL) {
+		perror("Sortiranje po prosjeku");
+		exit(EXIT_FAILURE);
+	}
+
+	fread(&brojClanova, sizeof(int), 1, pF);
+
+	CLAN* poljeClanova = malloc(brojClanova * sizeof(CLAN));
+	if (poljeClanova == NULL) {
+		fclose(pF);
+		fprintf(stderr, "Greska pri alokaciji memorije za polje clanova, funkcija sortiranjePoProsjeku\n");
+		exit(EXIT_FAILURE);
+	}
+
+	fread(poljeClanova, sizeof(CLAN), brojClanova, pF);
+
+	if (odabir == 1) {
+		for (int i = 0; i < brojClanova - 1; i++) {
+			for (int j = i + 1; j < brojClanova; j++) {
+				if (poljeClanova[i].prosjek > poljeClanova[j].prosjek) {
+					CLAN temp = poljeClanova[i];
+					poljeClanova[i] = poljeClanova[j];
+					poljeClanova[j] = temp;
+				}
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < brojClanova - 1; i++) {
+			for (int j = i + 1; j < brojClanova; j++) {
+				if (poljeClanova[i].prosjek < poljeClanova[j].prosjek) {
+					CLAN temp = poljeClanova[i];
+					poljeClanova[i] = poljeClanova[j];
+					poljeClanova[j] = temp;
+				}
+			}
+		}
+	}
+
+	rewind(pF);
+	fwrite(&brojClanova, sizeof(int), 1, pF);
+	fwrite(poljeClanova, sizeof(CLAN), brojClanova, pF);
+
+	free(poljeClanova);
+	fclose(pF);
+
+	printf("Clanovi su uspjesno sortirani po prosjeku.\n\n\n\n");
+}
+
+
+// ubaciti rename/remove funkciju.
+
+// koristiti staticki zauzeto polje negdje.
+
+
+//obrisi file pa probaj funkcije.
+
+//osiguraj od krivih unosa.
+
+//zatvori svugdje, free sve.
