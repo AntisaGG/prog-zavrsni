@@ -1,0 +1,20 @@
+Ukoliko se clanovi.bin ne otvara,
+ovo je direktan copy paste iz visual studia pri pokretanju programa.
+
+
+
++==============+=====================+=====================+===============================+=========+
+|      ID      |         Ime         |       Prezime       |            Adresa             | Prosjek |
++==============+=====================+=====================+===============================+=========|
+| 1464783      | Podatak             | Jos jedan           | fkgjdkfjg                     |  1.00   |
+| 1678142      | Uljez               | manji               | dsjkfks                       |  1.00   |
+| 1806868      | Tester              | Testeric            | kjsdfkj                       |  2.00   |
+| 1500006      | Patak               | Guska               | kjdfksjfd                     |  2.60   |
+| 1684077      | Uljez               | srednji             | dfkjgjkdfg                    |  3.00   |
+| 1235865      | Ante                | Mestrovic           | aSJksda                       |  4.10   |
+| 1145185      | Karla               | Blazevic            | Ajkfsdj                       |  4.60   |
+| 1832732      | Nezz                | testiram            | fjkgjkdfg                     |  4.90   |
+| 1516327      | Uljez               | veci                | fjkgjkfdg                     |  5.00   |
+| 1360887      | Nezz                | Nemam pojma         | jkfksdfs                      |  5.00   |
+| 1547817      | tkj                 | gjkjkfdg            | kdsflsd                       |  4.20   |
++==============+=====================+=====================+===============================+=========+
