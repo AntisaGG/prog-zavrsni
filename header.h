@@ -9,11 +9,13 @@ typedef struct {
 
 }CLAN; //2 3 
 
+void ispisivanjeClanova(const void* poljeClanova);
 void kreiranjeDatoteke(char* datoteka);
 int izbornik(char* datoteka);
 void dodavanjeClanova(char* datoteka);
 void* ucitajClanove(const char* datoteka);
-void ispisivanjeClanova(CLAN* poljeClanova);
 void brisanjeClana(char* datoteka);
 void pretragaPoIDu(char* datoteka);
 void sortiranjePoProsjeku(char* datoteka);
+void brisanjeDatoteke(const char* datoteka);
+int easterEgg(char* datoteka);

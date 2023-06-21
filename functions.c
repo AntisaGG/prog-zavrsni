@@ -2,12 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "header.h"
 
 
 static int brojClanova = 0;
-
-
 
 int izbornik(char* datoteka) { // 8
 
@@ -20,12 +19,13 @@ int izbornik(char* datoteka) { // 8
 		printf("====================");
 		printf("Odaberite jednu od ponudenih opcija:");
 		printf("====================\n");
-		printf("\t\t\tOpcija 1: Dodavanje clana!\n");
-		printf("\t\t\tOpcija 2: Brisanje clana!\n");
-		printf("\t\t\tOpcija 3: Ispis o svim clanovima!\n");
-		printf("\t\t\tOpcija 4: Pretraga po ID-u!\n");
-		printf("\t\t\tOpcija 5: Sortirane po prosjeku!\n");
-		printf("\t\t\tOpcija 9: Zavrsetak programa!\n");
+		printf("\t\t\tOpcija 1: Dodavanje clana.\n");
+		printf("\t\t\tOpcija 2: Brisanje clana.\n");
+		printf("\t\t\tOpcija 3: Ispis o svim clanovima.\n");
+		printf("\t\t\tOpcija 4: Pretraga po ID-u.\n");
+		printf("\t\t\tOpcija 5: Sortirane po prosjeku.\n");
+		printf("\t\t\tOpcija 6: Brisanje datoteke.\n");
+		printf("\t\t\tOpcija 9: Zavrsetak programa.\n");
 		printf("============================================================================\n");
 
 		scanf("%d", &uvjet);
@@ -41,20 +41,18 @@ int izbornik(char* datoteka) { // 8
 			poljeClanova = ucitajClanove(datoteka);
 			ispisivanjeClanova(poljeClanova);
 			free(poljeClanova);
-			printf("+==============+=====================+=====================+===============================+=========+\n\n\n");
 			break;
 		case 4:
 			pretragaPoIDu(datoteka);
-			printf("+==============+=====================+=====================+===============================+=========+\n\n\n");
 			break;
 		case 5:
 			sortiranjePoProsjeku(datoteka);
 			break;
 		case 6:
+			brisanjeDatoteke(datoteka);
 			break;
 		case 7:
-			break;
-		case 8:
+			easterEgg(datoteka);
 			break;
 		case 9:
 			return 0;
@@ -143,19 +141,27 @@ void* ucitajClanove(const char* datoteka) {
 }
 
 void ispisivanjeClanova(const void* poljeClanova) {
-	const CLAN* clanovi = (const CLAN*)poljeClanova;
-	printf("\n\n\n+==============+=====================+=====================+===============================+=========+\n");
-	printf("|      %-7s |         %-11s |       %-13s |            %-18s | %s | \n", "ID", "Ime", "Prezime", "Adresa","Prosjek");
-	printf("+==============+=====================+=====================+===============================+=========|\n");
-	for (int i = 0; i < brojClanova; i++) {
-		printf("| %-12d | %-19s | %-19s | %-29s |  %-4.2f   | \n",clanovi[i].id, clanovi[i].ime, clanovi[i].prezime, clanovi[i].adresa,clanovi[i].prosjek);
+
+	if(brojClanova==0){
+		printf("Trenutno nema niti jednog unesenog clana.\n\n");
 	}
+	else {
+		const CLAN* clanovi = (const CLAN*)poljeClanova;
+		printf("\n\n\n+==============+=====================+=====================+===============================+=========+\n");
+		printf("|      %-7s |         %-11s |       %-13s |            %-18s | %s | \n", "ID", "Ime", "Prezime", "Adresa", "Prosjek");
+		printf("+==============+=====================+=====================+===============================+=========|\n");
+		for (int i = 0; i < brojClanova; i++) {
+			printf("| %-12d | %-19s | %-19s | %-29s |  %-4.2f   | \n", clanovi[i].id, clanovi[i].ime, clanovi[i].prezime, clanovi[i].adresa, clanovi[i].prosjek);
+		}
+	}
+
+	if(brojClanova>0) printf("+==============+=====================+=====================+===============================+=========+\n\n\n");
 }
 
 
 void brisanjeClana(char* datoteka) {
 	int id;
-	printf("Unesite ID clana koji želite izbrisati: ");
+	printf("Unesite ID clana koji zelite izbrisati: ");
 	scanf("%d", &id);
 
 	FILE* pF = fopen(datoteka, "rb+");
@@ -190,7 +196,7 @@ void brisanjeClana(char* datoteka) {
 		return;
 	}
 
-	// Pomakni sve clanove nakon indexa za jedno mjesto unazad
+	// Pomicanje svih clanova nakon indexa jedno mjesto unazad
 	for (int i = index; i < brojClanova - 1; i++) {
 		poljeClanova[i] = poljeClanova[i + 1];
 	}
@@ -244,17 +250,13 @@ void pretragaPoIDu(char* datoteka) {
 		return;
 	}
 
-	printf("\n\n\n+==============+=====================+=====================+===============================+=========+\n");
-	printf("|      %-7s |         %-11s |       %-13s |            %-18s | %s | \n", "ID", "Ime", "Prezime", "Adresa", "Prosjek");
-	printf("+==============+=====================+=====================+===============================+=========|\n");
-
-	printf("| %-12d | %-19s | %-19s | %-29s |  %-4.2f   | \n",
-		poljeClanova[index].id,
-		poljeClanova[index].ime,
-		poljeClanova[index].prezime,
-		poljeClanova[index].adresa,
-		poljeClanova[index].prosjek);
-
+	else {
+		printf("\n\n\n+==============+=====================+=====================+===============================+=========+\n");
+		printf("|      %-7s |         %-11s |       %-13s |            %-18s | %s | \n", "ID", "Ime", "Prezime", "Adresa", "Prosjek");
+		printf("+==============+=====================+=====================+===============================+=========|\n");
+		printf("| %-12d | %-19s | %-19s | %-29s |  %-4.2f   | \n", poljeClanova[index].id, poljeClanova[index].ime, poljeClanova[index].prezime, poljeClanova[index].adresa, poljeClanova[index].prosjek);
+		printf("+==============+=====================+=====================+===============================+=========+\n\n\n");
+	}
 	free(poljeClanova);
 	fclose(pF);
 }
@@ -323,13 +325,41 @@ void sortiranjePoProsjeku(char* datoteka) {
 }
 
 
-// ubaciti rename/remove funkciju.
+void brisanjeDatoteke(const char* datoteka) {
+	char lozinka[20];
+	printf("Unesite lozinku za brisanje datoteke: ");
+	scanf("%19s", lozinka);
 
-// koristiti staticki zauzeto polje negdje.
+	if (strcmp(lozinka, "ljeto2023") != 0) {
+		printf("Pogresna lozinka, nemoguce obrisati datoteku.\n");
+		return;
+	}
+
+	int rezultat = remove(datoteka);
+	if (rezultat == 0) {
+		printf("Datoteka '%s' je uspjesno obrisana.\n", datoteka);
+		printf("Potrebno je restartirati program.\n");
+		exit(EXIT_SUCCESS); // Zaustavljanje programa
+	}
+	else {
+		printf("Pogreska prilikom brisanja datoteke '%s'.\n", datoteka);
+	}
+}
 
 
-//obrisi file pa probaj funkcije.
+int easterEgg(char* datoteka) {
+	CLAN* poljeClanova = ucitajClanove(datoteka);
+	int postoji = 0;
 
-//osiguraj od krivih unosa.
+	for (int i = 0; i < brojClanova; i++) {
+		if (strcmp(poljeClanova[i].ime, "Rick") == 0 && strcmp(poljeClanova[i].prezime, "Astley") == 0) {
+			postoji = 1;
+			break;
+		}
+	}
 
-//zatvori svugdje, free sve.
+	free(poljeClanova);
+	if (postoji == 1) {
+		printf("We're no strangers to love\nYou know the rules and so do I (do I)\nA full commitment's what I'm thinking of\nYou wouldn't get this from any other guy\nI just wanna tell you how I'm feeling\nGotta make you understand\nNever gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you\nWe've known each other for so long\nYour heart's been aching, but you're too shy to say it (say it)\nInside, we both know what's been going on (going on)\nWe know the game and we're gonna play it\nAnd if you ask me how I'm feeling\nDon't tell me you're too blind to see\nNever gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you\nNever gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you\nWe've known each other for so long\nYour heart's been aching, but you're too shy to say it (to say it)\nInside, we both know what's been going on (going on)\nWe know the game and we're gonna play it\nI just wanna tell you how I'm feeling\nGotta make you understand\nNever gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you\nNever gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you\nNever gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you\n");
+	}
+}

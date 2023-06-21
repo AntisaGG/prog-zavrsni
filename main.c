@@ -9,7 +9,3 @@ int main() {
 	printf("Kraj programa!\n");
 	return 0;
 }
-
-//Pregledan program na satu. Sve smjernice su bile pokrivene osim
-//rename/remove funckije i staticki zauzetog polja.
-
